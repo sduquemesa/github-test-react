@@ -6,6 +6,8 @@ import {fetchData} from './api'
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
 
+import {Grid} from '@material-ui/core';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -44,9 +46,17 @@ function App() {
 
       <h1>Public Github GIST overview</h1>
 
-      {data.map( (gist_entry, index) => {
-        return <GistCard gist_data={gist_entry}/>
-      })}
+      <Grid container spacing={3}>
+
+        {data.map( (gist_entry, index) => {
+          return (
+            <Grid item xs>
+              <GistCard gist_data={gist_entry}/>
+            </Grid>
+          );
+        })}
+
+      </Grid>
       
       <div className={classes.root}>
         <Pagination count={10} page={page} variant="outlined" onChange={handlePageChange}/>

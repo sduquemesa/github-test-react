@@ -27,7 +27,7 @@ const GistCard = (props) => {
                 component="img"
                 alt="Contemplative Reptile"
                 image={props.gist_data.owner.avatar_url}
-                title="Contemplative Reptile"
+                title="Profile Avatar"
             />
                 <CardContent>
                     <Typography variant='h5'>{props.gist_data.owner.login}</Typography>
