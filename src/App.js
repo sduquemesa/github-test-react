@@ -3,16 +3,30 @@ import styles from './App.module.css';
 import {GistCard} from './components';
 import {fetchData} from './api'
 
-const results_per_page = 20;
-const public_gists_url = `https://api.github.com/gists/public?per_page=${results_per_page}`
+import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
 function App() {
   const [data, setData] = useState();
+  const [page, setPage] = useState(1);
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const classes = useStyles();
 
   // Fetch data from API on mount
   useEffect( () => {
-    fetchData(setData);
-  }, []);
+    fetchData(setData, page);
+  }, [page]);
 
   console.log(data);
 
@@ -27,13 +41,16 @@ function App() {
 
   return (
     <div className={styles.appContainer} >
-      
+
       <h1>Public Github GIST overview</h1>
 
       {data.map( (gist_entry, index) => {
         return <GistCard gist_data={gist_entry}/>
       })}
       
+      <div className={classes.root}>
+        <Pagination count={10} page={page} variant="outlined" onChange={handlePageChange}/>
+      </div>
     </div>
   )
 
