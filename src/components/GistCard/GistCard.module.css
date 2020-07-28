@@ -5,3 +5,12 @@
 .media {
     height: 140;
 }
+
+.link {
+    color: black;
+    margin-bottom: 2rem;
+}
+
+ul {
+    margin: 1rem;
+}

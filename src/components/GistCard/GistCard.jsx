@@ -20,9 +20,23 @@ const GistCard = (props) => {
         setExpanded(!expanded);
     };
 
+    const handleCardClick = () => {
+        setExpanded(!expanded);
+    };
+
+    const files = props.gist_data.files;
+    var files_data = [];
+    for (var key in files){
+        var value =  files[key];
+        files_data.push(
+            {name:key, 
+            url:value.raw_url}
+            );
+    }
+
     return (
         <Card className={styles.card}>
-            <CardActionArea>
+            <CardActionArea onClick={handleCardClick}>
             <CardMedia
                 component="img"
                 alt="Contemplative Reptile"
@@ -34,20 +48,43 @@ const GistCard = (props) => {
                     <Typography color='textSecondary' gutterBottom>{props.gist_data.description}</Typography>
                     <Typography color='textSecondary'>{props.gist_data.created_at}</Typography>
                 </CardContent>
+                <Button size="small" 
+                        color="primary" 
+                        onClick={handleExpandClick}
+                        >    
+                    {expanded ? 'Less' : 'More'}
+                </Button>
             </CardActionArea>
             <CardActions>
-            <Button size="small" color="primary" onClick={handleExpandClick}>
-                More
-            </Button>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                <Typography paragraph>Method:</Typography>
-                <Typography paragraph>
-                    Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                    minutes.
-                </Typography>
-                </CardContent>
-            </Collapse>
+                
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <a href={props.gist_data.owner.html_url} 
+                            rel="noopener noreferrer" 
+                            target="_blank"   
+                            className = {styles.link}
+                        >
+                            View Github Profile
+                        </a>
+
+                        <Typography variant='h6'>gist files:</Typography>
+                        <ul className={styles.list}>
+                            { files_data.map( (file, index) => {
+                                return (
+                                    <li>
+                                        <a href={file.url} 
+                                        rel="noopener noreferrer" 
+                                        target="_blank"   
+                                        className = {styles.link}>
+                                            {file.name}
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+
+                    </CardContent>
+                </Collapse>
             </CardActions>
         </Card>
     )

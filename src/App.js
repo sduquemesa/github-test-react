@@ -30,7 +30,7 @@ function App() {
     fetchData(setData, page);
   }, [page]);
 
-  console.log(data);
+  // console.log(data);
 
   if (!data) {
     return (
@@ -51,7 +51,7 @@ function App() {
         {data.map( (gist_entry, index) => {
           return (
             <Grid item xs>
-              <GistCard gist_data={gist_entry}/>
+              <GistCard gist_data={gist_entry} id={index}/>
             </Grid>
           );
         })}
